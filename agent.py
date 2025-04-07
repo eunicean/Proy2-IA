@@ -7,6 +7,7 @@ class mastermindGameAgent:
         self.spaces = 4
         self.attempts = 0
         self.possible_combinations = list(itertools.product(colors, repeat=self.spaces)) # modelo
+        self.history = []
 
     def feedback(self, guess, solution):
         # verificar cuantas fichas coinciden en posiciones exactas
@@ -36,6 +37,8 @@ class mastermindGameAgent:
                 # print(f"  Nuevo conocimiento - {actual_combination}")
                 new_space.append(actual_combination)
         self.possible_combinations = new_space # cambia el modelo por posibles respuestas restantes
+        print(f"  - Posibles combinaciones - {len(new_space)}")
+        self.history.append(len(new_space))
         self.attempts += 1
 
     def next_guess(self):
