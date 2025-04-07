@@ -34,9 +34,33 @@ def modo_automatico():
         print(f"  -> Intento #{i+1} - {solver.history[i]} combinaciones disponibles")
     print("--------------------------------------------------------------------------")
 
-# TODO: modo tiempo real
+# modo tiempo real
+def get_user_feedback():
+    while True:
+        try:
+            exact_only = int(input("Fichas en posición correcta: "))
+            color_only = int(input("Colores correctos en posición incorrecta: "))
+            return exact_only, color_only
+        except ValueError:
+            print("Por favor ingresa números válidos.")
+
 def modo_tiempo_real():
-    return
+    solver = mastermindGameAgent(colors)
+    print("Piensa una combinación secreta (4 colores de la lista):", ", ".join(colors))
+    guess = solver.next_guess()
+
+    while guess:
+        print(f"Intento #{solver.attempts + 1}: {guess}")
+        feedback = get_user_feedback()
+        if feedback[0] == 4:
+            break
+        solver.update_knowledge(guess, feedback)
+        guess = solver.next_guess()
+
+    print("\n--------------------------------------------------------------------------")
+    print(f"INTENTOS -> {solver.attempts + 1}")
+    print(" Combinación determinada:", guess)
+    print("--------------------------------------------------------------------------")
 
   
 
